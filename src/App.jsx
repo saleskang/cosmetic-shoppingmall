@@ -10,6 +10,7 @@ import Life from './components/Life';
 import Space from './components/Space';
 import Footer from './components/Footer';
 import Shop from './pages/Shop';
+import CallbackPage from "./pages/CallbackPage";
 
 // 홈페이지 컴포넌트
 const HomePage = () => {
@@ -34,6 +35,8 @@ function App() {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/shop" element={<Shop />} />
+      <Route path="/callback" element={<CallbackPage />} />
+
     </Routes>
   );
 }
