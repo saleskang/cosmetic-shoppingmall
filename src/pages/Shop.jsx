@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { productApi } from '../services/cafe24Api';
 
 
 const mockProducts = [
