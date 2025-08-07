@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [sortBy, setSortBy] = useState("newest");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -26,19 +24,6 @@ const Shop = () => {
       });
   }, []);
 
-  // 카테고리/정렬 필터
-  let filteredProducts = products;
-  if (selectedCategory !== "all") {
-    filteredProducts = filteredProducts.filter(
-      (p) => p.category === selectedCategory
-    );
-  }
-  if (sortBy === "price_asc") {
-    filteredProducts = [...filteredProducts].sort((a, b) => a.price - b.price);
-  } else if (sortBy === "price_desc") {
-    filteredProducts = [...filteredProducts].sort((a, b) => b.price - a.price);
-  }
-
   if (loading) return <div className="p-10 text-center">로딩 중...</div>;
   if (error) return <div className="p-10 text-center text-red-500">{error}</div>;
 
@@ -47,11 +32,7 @@ const Shop = () => {
       {/* 필터/정렬 등은 동일 */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.product_no || product.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-            >
+
               <div className="aspect-w-1 aspect-h-1 w-full">
                 <img
                   src={product.list_image || product.image || "https://via.placeholder.com/300"}
@@ -81,10 +62,8 @@ const Shop = () => {
                 </div>
               </div>
             </div>
-          ))}
         </div>
       </div>
-    </div>
   );
 };
 
