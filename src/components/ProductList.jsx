@@ -1,87 +1,18 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-
-const products = [
-    {
-        img: '../assets/img/1.jpg',
-        name: '티트리 퓨리파잉 토닉 100ML',
-        origin: '20,000원',
-        price: '13,000원',
-        sale: '35%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-        name: '로즈마리 미니 에센셜즈',
-        origin: '4,000원',
-        price: '3,600원',
-        sale: '10%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1455656678494-4d1b5f3e7ad3?auto=format&fit=crop&w=600&q=80',
-        name: '수딩 알로에 베라 겔 500ML',
-        origin: '16,000원',
-        price: '10,400원',
-        sale: '35%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1522335789203-a2588f7b0f94?auto=format&fit=crop&w=600&q=80',
-        name: '바이탈라이징 로즈마리 컨센트레이트 에센스 100ML',
-        origin: '30,000원',
-        price: '21,000원',
-        sale: '30%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-        name: '네롤리 브라이트닝 페이셜 오일 30ML',
-        origin: '26,000원',
-        price: '19,500원',
-        sale: '25%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-        name: '라벤더 릴렉싱 미스트 100ML',
-        origin: '18,000원',
-        price: '13,500원',
-        sale: '25%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=600&q=80',
-        name: '카렌듈라 수딩 크림 50ML',
-        origin: '22,000원',
-        price: '16,500원',
-        sale: '25%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1444065381814-865dc9da92c0?auto=format&fit=crop&w=600&q=80',
-        name: '그린티 밸런싱 폼 클렌저 150ML',
-        origin: '15,000원',
-        price: '11,250원',
-        sale: '25%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1465101178521-c1a9136a13e6?auto=format&fit=crop&w=600&q=80',
-        name: '비타민C 브라이트닝 세럼 30ML',
-        origin: '32,000원',
-        price: '24,000원',
-        sale: '25%',
-    },
-    {
-        img: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
-        name: '로즈 앱솔루트 마스크 100ML',
-        origin: '28,000원',
-        price: '21,000원',
-        sale: '25%',
-    },
-];
+import { productApi } from '../services/api';
 
 function ProductList() {
     const sectionRef = useRef(null);
     const cardRefs = useRef([]);
     const progressBar = useRef(null);
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // ⭐ 카드 등장 애니메이션: Swiper 슬라이드 바뀔 때마다 트리거!
     const animateCards = () => {
@@ -101,7 +32,7 @@ function ProductList() {
     };
 
     const onSlideChange = (swiper) => {
-        if (progressBar.current) {
+        if (progressBar.current && products.length > 0) {
             const totalSlides = products.length;
             const slidesPerView = swiper.params.slidesPerView || 1;
             const maxIndex = totalSlides - slidesPerView;
@@ -118,25 +49,103 @@ function ProductList() {
         animateCards();
     };
 
+    // 제품 데이터 로드
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                setLoading(true);
+                const response = await productApi.getProducts();
+                if (response.success) {
+                    setProducts(response.data);
+                } else {
+                    setError('제품 데이터를 불러오는데 실패했습니다.');
+                }
+            } catch (err) {
+                console.error('제품 로드 오류:', err);
+                setError('제품 데이터를 불러오는데 실패했습니다.');
+                // API 오류 시 기본 데이터 사용
+                setProducts([
+                    {
+                        id: 1,
+                        name: 'Natural Face Cream',
+                        description: '자연스러운 보습 효과',
+                        price: 25000,
+                        image: '/assets/img/1.jpg',
+                        category: 'skincare'
+                    },
+                    {
+                        id: 2,
+                        name: 'Organic Serum',
+                        description: '유기농 성분으로 만든 세럼',
+                        price: 35000,
+                        image: '/assets/img/2.jpg',
+                        category: 'skincare'
+                    }
+                ]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
     // 최초 mount 또는 스크롤 등장
     useEffect(() => {
-        // Intersection Observer + animateCards
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        animateCards();
-                        observer.disconnect();
-                    }
-                });
-            },
-            { threshold: 0.2 }
-        );
-        if (sectionRef.current) observer.observe(sectionRef.current);
+        if (products.length > 0) {
+            // Intersection Observer + animateCards
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            animateCards();
+                            observer.disconnect();
+                        }
+                    });
+                },
+                { threshold: 0.2 }
+            );
+            if (sectionRef.current) observer.observe(sectionRef.current);
 
-        return () => observer.disconnect();
-        // eslint-disable-next-line
-    }, []);
+            return () => observer.disconnect();
+        }
+    }, [products]);
+
+    if (loading) {
+        return (
+            <section className="bg-[#f8f6ef] py-16">
+                <div className="w-full px-0">
+                    <div className="flex items-center justify-between mb-8 mx-5">
+                        <h2 className="text-3xl font-bold">Product</h2>
+                        <a href="#" className="text-sm font-medium underline">
+                            view all
+                        </a>
+                    </div>
+                    <div className="flex justify-center items-center h-64">
+                        <div className="text-lg text-gray-600">제품을 불러오는 중...</div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
+    if (error) {
+        return (
+            <section className="bg-[#f8f6ef] py-16">
+                <div className="w-full px-0">
+                    <div className="flex items-center justify-between mb-8 mx-5">
+                        <h2 className="text-3xl font-bold">Product</h2>
+                        <a href="#" className="text-sm font-medium underline">
+                            view all
+                        </a>
+                    </div>
+                    <div className="flex justify-center items-center h-64">
+                        <div className="text-lg text-red-600">{error}</div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section ref={sectionRef} className="bg-[#f8f6ef] py-16">
@@ -162,26 +171,29 @@ function ProductList() {
                             1024: { slidesPerView: 4, spaceBetween: 32 },
                         }}
                     >
-                        {products.map((p, idx) => (
-                            <SwiperSlide key={idx}>
+                        {products.map((product, idx) => (
+                            <SwiperSlide key={product.id || idx}>
                                 <div
                                     ref={(el) => (cardRefs.current[idx] = el)}
                                     className="bg-white rounded-lg overflow-hidden flex flex-col justify-between shadow group transition-shadow duration-300 hover:shadow-xl h-[700px] w-full"
                                 >
                                     <div className="overflow-hidden h-4/5">
                                         <img
-                                            src={p.img}
-                                            alt={p.name}
+                                            src={product.image}
+                                            alt={product.name}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                         />
                                     </div>
                                     <div className="p-8 flex flex-col gap-2 h-1/5">
-                                        <div className="font-medium text-lg text-gray-700 truncate">{p.name}</div>
+                                        <div className="font-medium text-lg text-gray-700 truncate">{product.name}</div>
                                         <div className="flex items-end gap-4 mt-2">
-                                            <span className="text-gray-400 line-through text-base">{p.origin}</span>
-                                            <span className="font-bold text-2xl text-gray-900">{p.price}</span>
-                                            <span className="text-green-600 font-bold text-xl">{p.sale}</span>
+                                            <span className="font-bold text-2xl text-gray-900">
+                                                {product.price?.toLocaleString()}원
+                                            </span>
                                         </div>
+                                        {product.description && (
+                                            <div className="text-sm text-gray-500 truncate">{product.description}</div>
+                                        )}
                                     </div>
                                 </div>
                             </SwiperSlide>

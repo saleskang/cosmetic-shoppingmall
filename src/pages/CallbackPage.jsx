@@ -2,11 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const clientId = import.meta.env.VITE_CAFE24_CLIENT_ID;
-const clientSecret = import.meta.env.VITE_CAFE24_CLIENT_SECRET;
-const redirectUri = import.meta.env.VITE_CAFE24_REDIRECT_URL;
-const mallId = import.meta.env.VITE_CAFE24_MALL_ID;
-
 const CallbackPage = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get("code");
@@ -17,32 +12,15 @@ const CallbackPage = () => {
   useEffect(() => {
     if (!code) return;
 
-    const fetchToken = async () => {
-      try {
-        const base64 = btoa(`${clientId}:${clientSecret}`);
-
-        const res = await axios.post(
-          `https://${mallId}.cafe24api.com/api/v2/oauth/token`,
-          new URLSearchParams({
-            grant_type: "authorization_code",
-            code,
-            redirect_uri: redirectUri,
-          }),
-          {
-            headers: {
-              Authorization: `Basic ${base64}`,
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-          }
-        );
+    // Node.js(Express) API로 code를 전달
+    axios.post("http://localhost:5001/api/cafe24/token", { code })
+      .then(res => {
         setToken(res.data.access_token);
-        // 필요하다면 localStorage.setItem("cafe24_token", res.data.access_token);
-      } catch (err) {
+        // 필요하면 localStorage.setItem("cafe24_token", res.data.access_token);
+      })
+      .catch(err => {
         setError(JSON.stringify(err.response?.data || err.message));
-      }
-    };
-
-    fetchToken();
+      });
   }, [code]);
 
   return (
