@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // 카페24 API 설정
-const CAFE24_API_BASE_URL = import.meta.env.VITE_CAFE24_API_URL || 'https://tjsdn6752.cafe24.com';
+const CAFE24_API_BASE_URL = import.meta.env.VITE_CAFE24_API_URL || 'http://192.168.0.200:5000';
 const CAFE24_API_KEY = import.meta.env.VITE_CAFE24_API_KEY;
 
 // API 인스턴스 생성

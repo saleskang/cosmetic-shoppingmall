@@ -13,7 +13,7 @@ const CallbackPage = () => {
     if (!code) return;
 
     // Node.js(Express) API로 code를 전달
-    axios.post("http://localhost:5001/api/cafe24/token", { code })
+    axios.post("http://192.168.0.200:5000/api/cafe24/token", { code })
       .then(res => {
         setToken(res.data.access_token);
         // 필요하면 localStorage.setItem("cafe24_token", res.data.access_token);
