@@ -9,7 +9,7 @@ import Story from './components/Story';
 import Life from './components/Life';
 import Space from './components/Space';
 import Footer from './components/Footer';
-import BrandPage from './pages/brandPage';
+import BrandPage from './pages/BrandPage';
 
 
 // 홈페이지 컴포넌트
