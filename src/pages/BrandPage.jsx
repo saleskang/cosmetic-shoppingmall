@@ -11,12 +11,23 @@ export default function BrandPage() {
                 SEA & SAND<br/>ESSENTIALS
               </h1>
 
-              <p className="text-gray-700 leading-7">
-                From us to you: A curation of seasonal essentials, perfectly suited for sun-drenched getaways.
-                Enjoy a 4-piece mini regimen of La Mer heroes plus an emerald beauty bag with any eligible $375 purchase.
-                Add a luxury mini of The Moisturizing Soft Cream with any eligible $500 purchase.
-                Enter code: <strong>SUMMERHEROES</strong>
-              </p>
+                                         <div className="text-gray-700 leading-7">
+                        <p className="mb-2">
+                          From us to you: A curation of seasonal essentials,<br/>
+                          perfectly suited for sun-drenched getaways.
+                        </p>
+                        <p className="mb-2">
+                          Enjoy a 4-piece mini regimen of La Mer heroes<br/>
+                          plus an emerald beauty bag with any eligible $375 purchase.
+                        </p>
+                        <p className="mb-2">
+                          Add a luxury mini of The Moisturizing Soft Cream<br/>
+                          with any eligible $500 purchase.
+                        </p>
+                        <p>
+                          Enter code: <strong>SUMMERHEROES</strong>
+                        </p>
+                      </div>
 
               <a href="#" className="inline-block w-fit underline underline-offset-4 font-medium">
                 Shop now
