@@ -14,7 +14,7 @@ function Header() {
       </Link>
       <nav>
         <ul className="flex gap-10 font-light text-lg">
-          <li>
+          {/* <li>
             <Link 
               to="/shop" 
               className={`hover:opacity-80 transition-opacity ${
@@ -23,9 +23,9 @@ function Header() {
             >
               Shop
             </Link>
-          </li>
-          <li><a href="#" className="opacity-70 hover:opacity-100 transition-opacity">Event</a></li>
-          <li><a href="#" className="opacity-70 hover:opacity-100 transition-opacity">About</a></li>
+          </li> */}
+          {/* <li><a href="#" className="opacity-70 hover:opacity-100 transition-opacity">Event</a></li> */}
+          <li><Link to="/brand"> <a href="#" className="opacity-70 hover:opacity-100 transition-opacity">BRAND</a></Link></li>
         </ul>
       </nav>
       <div className="flex items-center gap-6 text-xl">

@@ -1,5 +1,5 @@
-import Img1 from '../assets/img/1.jpg';
-import Img2 from '../assets/img/2.jpg';
+import Img1 from '/assets/img/1.jpg';
+import Img2 from '/assets/img/2.jpg';
 
 import React, { useRef } from 'react';
 import gsap from 'gsap';

@@ -1,7 +1,8 @@
-import Img1 from '../assets/img/1.jpg';
-import Img2 from '../assets/img/2.jpg';
-import Img3 from '../assets/img/4.jpg';
-import Img4 from '../assets/img/5.jpg';
+import Img1 from '/assets/img/1.jpg';
+import Img2 from '/assets/img/2.jpg';
+import Img3 from '/assets/img/3.jpg';
+import Img4 from '/assets/img/4.jpg';
+
 function Life() {
     return (
         <div className="flex flex-col justify-between h-[500]px bg-[#f8f6ef] my-20">
@@ -11,7 +12,7 @@ function Life() {
             </div>
             <div className="flex w-full px-4">
                 {[Img1, Img2, Img3, Img4].map((img, idx) => (
-                    <div key={idx} className="flex-1 bg-[#f8f6ef] rounded-lg p-4 flex flex-col h-[360px]">
+                    <div key={idx} className="flex-1 bg-[#f8f6ef] rounded-lg p-2 flex flex-col h-[360px]">
                         <div className="flex-1 basis-3/5 flex items-center justify-center overflow-hidden">
                             <img src={img} alt="" className="w-full h-full object-cover rounded" />
                         </div>

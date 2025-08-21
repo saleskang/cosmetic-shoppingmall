@@ -7,11 +7,11 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-fade';
 
-import Img1 from '../assets/img/1.jpg';
-import Img2 from '../assets/img/2.jpg';
-import Img4 from '../assets/img/4.jpg';
-import Img5 from '../assets/img/5.jpg';
-import Img6 from '../assets/img/6.jpg';
+import Img1 from '/assets/img/1.jpg';
+import Img2 from '/assets/img/2.jpg';
+import Img3 from '/assets/img/3.jpg';
+import Img4 from '/assets/img/4.jpg';
+import Img5 from '/assets/img/5.jpg';
 
 
 import gsap from 'gsap';
@@ -20,13 +20,13 @@ import gsap from 'gsap';
 const slides = [
   { title: "Slide 1", desc: "지상 최고 온천수 비누입니다." },
   { title: "Slide 2", desc: "지상 최고의 화장품 ." },
+  { title: "Slide 3", desc: "세계최강의 화장품 팝니다" },
   { title: "Slide 4", desc: "세계최강의 화장품 팝니다" },
   { title: "Slide 5", desc: "세계최강의 화장품 팝니다" },
-  { title: "Slide 6", desc: "세계최강의 화장품 팝니다" },
 ];
 
 const images = [
-Img1,Img2,Img4,Img5,Img6
+Img1,Img2,Img3,Img4,Img5
 ]
 
   

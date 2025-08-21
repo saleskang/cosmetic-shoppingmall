@@ -1,4 +1,4 @@
-import Img1 from '../assets/img/1.jpg';
+import Img1 from '/assets/img/1.jpg';
 
 function Space() {
     return (
