@@ -33,8 +33,8 @@ export default function BrandPage() {
                 Shop now
               </a>
 
-              <div className="absolute left-0 bottom-0 text-[12vw] md:text-[8rem] leading-none font-serif tracking-tight">
-                LA MER
+              <div className="absolute bottom-0 left-0 pt-6 text-[clamp(10rem,8vw,10rem)] leading-none font-serif tracking-tight">
+                  LA MER
               </div>
             </div>
           </div>
